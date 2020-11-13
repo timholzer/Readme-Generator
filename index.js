@@ -1,3 +1,6 @@
+const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
 // This readme generator requires a response about:
 
 //Title, usage, table of contents, description, installation, usage, license, rules for contributing, tests?, and questions?
@@ -15,7 +18,18 @@
 
 
 // array of questions for user
-const questions = [
+const questions = [    
+    {
+    type: 'input',
+    message: "What is your project's title?",
+    name: 'title',
+    validate: function (answer) {
+        if (answer.length < 1) {
+            return console.log("Enter a valid title");
+        }
+        return true;
+    }
+},
 
 ];
 
@@ -24,7 +38,9 @@ function writeToFile(fileName, data) {
 }
 
 // function to initialize program
-function init() {
+async function init() {
+    const userResponses = await inquirer.prompt(questions);
+    console.log("Your responses: ", userResponses);
 
 }
 
