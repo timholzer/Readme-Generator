@@ -1,13 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
-// This readme generator requires a response about:
-
-//Title, usage, table of contents, description, installation, license, rules for contributing, tests?, and questions?
-
-// maybe start with radio buttons to choose which of those types you want?
-
-//Title is required, license is from a list of options and added as a new file.
+const { stringify } = require("querystring");
 
 //link is added for github username in the questions sections
 
@@ -15,10 +9,23 @@ const util = require("util");
 
 //table of contents has links to different parts of the readme.
 
+//have the responses write to the file.
+
 
 
 // array of questions for user
 const questions = [    
+    {
+        type: "input",
+        message: "What do you want to name the readme?",
+        name: "file name",
+        validate: function (answer) {
+            if (answer.length < 1) {
+                return console.log("Enter a valid title");
+            }
+            return true;
+        }   
+    },
     {
     type: "input",
     message: "What is your project's title?",
@@ -162,16 +169,30 @@ const questions = [
 
 
 
+
 // function to write README file
 function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if (err) {
+          return console.log(err);
+        }
+      
+        console.log("Readme Generated")
+    });
 }
+
+const writeFileAsync = util.promisify(writeToFile);
 
 // function to initialize program
 async function init() {
+    
     const userResponses = await inquirer.prompt(questions);
     console.log("Your responses: ", userResponses);
+    let strUserResponses = stringify(userResponses);
 
+    await writeFileAsync('TestREADME.md', strUserResponses);
 }
+
 
 // function call to initialize program
 init();
