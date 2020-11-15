@@ -1,13 +1,8 @@
+//required packages
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
-const { stringify } = require("querystring");
 
-//link is added for github username in the questions sections
-
-//email is added to the questions section
-
-//table of contents has links to different parts of the readme.
 
 
 // array of questions for user
@@ -45,7 +40,6 @@ const questions = [
         return true;
     }
 },
-//figure out how to do the table of contents
 {
     type: "input",
     message: "Write a description of your project.",
@@ -179,7 +173,7 @@ function writeToFile(fileName, data) {
 }
 
 
-
+//waiting for responses before writing the file
 const writeFileAsync = util.promisify(writeToFile);
 
 // function to initialize program
@@ -187,6 +181,7 @@ async function init() {
     
     const userResponses = await inquirer.prompt(questions);
     console.log("Your responses: ", userResponses);
+    //formatting the responses into a readme
     let formattedUserResponses = (`
     # ${userResponses.title} 
     
