@@ -9,16 +9,13 @@ const { stringify } = require("querystring");
 
 //table of contents has links to different parts of the readme.
 
-//have the responses write to the file.
-
-
 
 // array of questions for user
 const questions = [    
     {
         type: "input",
         message: "What do you want to name the readme?",
-        name: "file name",
+        name: "fileName",
         validate: function (answer) {
             if (answer.length < 1) {
                 return console.log("Enter a valid title");
@@ -149,7 +146,7 @@ const questions = [
     name: "repo",
     validate: function (answer) {
         if (answer.length < 1) {
-            return console.log("A valid GitHub repo is required for a badge.");
+            return console.log("A valid GitHub repo is required");
         }
         return true;
     }
@@ -181,6 +178,8 @@ function writeToFile(fileName, data) {
     });
 }
 
+
+
 const writeFileAsync = util.promisify(writeToFile);
 
 // function to initialize program
@@ -188,9 +187,31 @@ async function init() {
     
     const userResponses = await inquirer.prompt(questions);
     console.log("Your responses: ", userResponses);
-    let strUserResponses = stringify(userResponses);
+    let formattedUserResponses = (`
+    # ${userResponses.title} 
+    
+    ${userResponses.description}
+    \n* [Installation](#Installation)
+    \n* [Instructions](#Usage)
+    \n* [Contribution](#Contribution)
+    \n* [Tests](#Tests)
+    \n* [License](#License)
+    \n* [Author](#Author)    
+    ## Installation
+    ${userResponses.installation}
+    ## Instructions
+    ${userResponses.usage}
+    ## Contribution
+    ${userResponses.contributing}
+    ## Tests
+    ${userResponses.tests}
+    ## License 
+    This project is licensed under the ${userResponses.license} license
+    ## Author 
+    \n##${userResponses.username} - Email: ${userResponses.email} - GitHub Repo: https://github.com/${userResponses.username}/${userResponses.repo}
+    `)
 
-    await writeFileAsync('TestREADME.md', strUserResponses);
+    await writeFileAsync(`${userResponses.fileName}.md`, formattedUserResponses);
 }
 
 
