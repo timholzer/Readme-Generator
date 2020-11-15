@@ -203,7 +203,7 @@ async function init() {
     ## License 
     This project is licensed under the ${userResponses.license} license
     ## Author 
-    \n##${userResponses.username} - Email: ${userResponses.email} - GitHub Repo: https://github.com/${userResponses.username}/${userResponses.repo}
+    ## ${userResponses.username} - Email: ${userResponses.email} - GitHub Repo: https://github.com/${userResponses.username}/${userResponses.repo}
     `)
 
     await writeFileAsync(`${userResponses.fileName}.md`, formattedUserResponses);
