@@ -1,9 +1,10 @@
 
-    # Readme Generator 
+    ## Readme Generator 
     
     This is a readme generator that gives you prompts to help you create a readme for your project.
-    ![](prompts.png)
+            
     
+   * ![](assets/prompt.png)
 * [Installation](#Installation)
     
 * [Instructions](#Usage)
@@ -27,4 +28,5 @@
     This project is licensed under the MIT license
     ## Author 
     ## timholzer - Email: timiholzer@gmail.com - GitHub Repo: https://github.com/timholzer/codingbootcamphw9
+
     
